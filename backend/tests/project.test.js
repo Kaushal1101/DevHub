@@ -1,3 +1,5 @@
+// Testcases for Project Authentication
+
 // Import testing library and server
 const request = require('supertest');
 const app = require('../server');
@@ -10,6 +12,8 @@ const { MongoMemoryServer } = require('mongodb-memory-server');
 const User = require('../models/userModel');
 const Project = require('../models/projectModel');
 const jwt = require('jsonwebtoken');
+
+process.env.JWT_SECRET = 'test_secret'
 
 let mongo, token, userId;
 
