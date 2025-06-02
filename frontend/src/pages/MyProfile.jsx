@@ -5,6 +5,7 @@ export default function MyProfile() {
   const { user } = useSelector((state) => state.auth)
   const navigate = useNavigate()  
 
+  // If user haven't load in yet
   if (!user) {
     return (
       <div className="flex justify-center items-center min-h-screen bg-base-200">
@@ -13,6 +14,7 @@ export default function MyProfile() {
     )
   }
 
+  // helper function so that we dont need repeat card layout
   const renderCard = (title, value, isLink = false) => (
     <div className="card bg-base-100 shadow-xl mb-6">
       <div className="card-body">

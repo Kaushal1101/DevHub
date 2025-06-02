@@ -1,11 +1,13 @@
 import axiosInstance from './../../api/axiosInstance'
 
-const API_URL = import.meta.env.VITE_API_URL + '/api/users'
+const API_URL = import.meta.env.VITE_API_URL + '/api/users' // fixed the API_URL (was showing /api twice in browser console)
 
-// Register user
+// Register user (fixed registering issue not showing in database)
 const register = async (userData) => {
+        //console.log('Registering user with data:', userData)
         const response = await axiosInstance.post(API_URL, userData)
 
+        //console.log('Recieved response:', response.data)
         if(response.data) {
             localStorage.setItem('user', JSON.stringify(response.data))
             localStorage.setItem('token', response.data.token)

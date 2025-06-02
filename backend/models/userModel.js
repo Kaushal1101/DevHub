@@ -1,4 +1,3 @@
-// Import mongoose
 const mongoose = require('mongoose')
 
 // Create user model

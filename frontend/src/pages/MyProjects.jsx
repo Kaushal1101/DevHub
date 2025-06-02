@@ -18,6 +18,7 @@ export default function MyProjects() {
     if (isError && message) toast.error(message)
   }, [isError, message])
 
+  // Handles the deletion of the project (dialog box to confirm)
   const handleDelete = (id) => {
     if (confirm('Are you sure you want to delete this project?')) {
       dispatch(deleteProject(id))

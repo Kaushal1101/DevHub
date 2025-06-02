@@ -10,7 +10,7 @@ import HomePage from './pages/HomePage'
 import CreateProject from './pages/CreateProject'
 import Register from './pages/Register'
 import Login from './pages/Login'
-import ViewProject from './pages/ViewProject'
+import ViewProject from './pages/ViewProject' 
 import EditProfile from './pages/EditProfile'
 import UserProfile from './pages/UserProfile'
 import MyProfile from './pages/MyProfile'
@@ -40,7 +40,7 @@ const App = () => {
         </Routes>
       </main>
 
-      <ToastContainer position="top-right" autoClose={3000} />
+      <ToastContainer position="top-right" autoClose={3000} /> // change the duration accordingly
     </>
   )  
 }

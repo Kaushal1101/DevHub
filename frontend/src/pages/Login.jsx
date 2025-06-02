@@ -30,6 +30,11 @@ export default function Login() {
     }
   }, [isSuccess, user, navigate, dispatch])
 
+  /* Accidentally mutated the state directly LOL
+  const onChange = (e) => {
+    formData[e.target.name] = e.target.value
+  */
+
   const onChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
 

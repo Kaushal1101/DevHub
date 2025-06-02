@@ -26,6 +26,11 @@ const deleteProject = async (id) => {
   return response.data
 }
 
+/* const deleteProject = async (id) => {
+  const response = await axiosInstance.delete(`projects/id`)
+  return response.data
+}
+*/
 
 // Get all projects created by a specific user
 const getUserProjects = async () => {

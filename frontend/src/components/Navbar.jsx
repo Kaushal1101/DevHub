@@ -16,7 +16,6 @@ function Navbar() {
 
   return (
     <header className="navbar bg-base-200 shadow-md px-6 py-2">
-      {/* left: logo/title */}
       <div className="navbar-start">
         <Link
           to="/"
@@ -26,7 +25,6 @@ function Navbar() {
         </Link>
       </div>
 
-      {/* right: auth links/buttons */}
       <div className="navbar-end space-x-2">
         {user ? (
           <>

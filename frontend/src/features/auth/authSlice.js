@@ -13,12 +13,14 @@ const initialState = {
   message: '',
 }
 
-// Register user
+// Register user (fixed register issue not showing up in database)
 export const register = createAsyncThunk('auth/register', async (user, thunkAPI) => {
   try {
+    //console.log('Registering user', user)
     return await authService.register(user)
   } catch (error) {
     const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+    //console.error('Registration error:', message)
     return thunkAPI.rejectWithValue(message)
   }
 })
@@ -28,7 +30,12 @@ export const login = createAsyncThunk('auth/login', async (user, thunkAPI) => {
   try {
     return await authService.login(user)
   } catch (error) {
-    const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
+    const message = 
+    (error.response && 
+    error.response.data && 
+    error.response.data.message) ||
+    error.message ||
+    error.toString()
     return thunkAPI.rejectWithValue(message)
   }
 })
@@ -46,7 +53,10 @@ export const getMe = createAsyncThunk('auth/getMe', async (_, thunkAPI) => {
 
     return await authService.getMe(token)
   } catch (error) {
-    const message = (error.response?.data?.message) || error.message || 'Unable to fetch user'
+    const message = 
+    (error.response?.data?.message) ||
+     error.message || 
+     'Unable to fetch user'
     return thunkAPI.rejectWithValue(message)
   }
 })
@@ -64,8 +74,6 @@ export const updateProfile = createAsyncThunk('auth/updateProfile', async (data,
     return thunkAPI.rejectWithValue(error.response?.data?.message || 'Update failed')
   }
 })
-
-
 
 
 export const authSlice = createSlice({
