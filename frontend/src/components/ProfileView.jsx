@@ -1,10 +1,12 @@
-import { useParams } from 'react-router-dom'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import { useParams, useNavigate } from 'react-router-dom';   // ⬅️ added useNavigate
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import chatService from '../features/chat/chatService';      // ⬅️ add your API helper
 
-export default function ProfileView ({ user: propUser }) {
+export default function ProfileView({ user: propUser }) {
   const { id } = useParams();
-  const [profile, setProfile] = useState(null)
+  const navigate = useNavigate();                           // ⬅️
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     if (propUser) {
@@ -27,8 +29,19 @@ export default function ProfileView ({ user: propUser }) {
       <div className="min-h-screen flex justify-center items-center bg-base-200 text-white">
         <p>Loading user...</p>
       </div>
-    )
+    );
   }
+
+  /* -------- 🆕 Start-Chat handler -------- */
+  const handleStartChat = async () => {
+    try {
+      const res = await chatService.startChat(profile._id); // POST /api/chats/start
+      navigate(`/chats/${res.data._id}`);                   // go to chat room
+    } catch (err) {
+      console.error('Failed to start chat:', err);
+    }
+  };
+  /* --------------------------------------- */
 
   const renderCard = (title, value, isLink = false) => (
     <div className="card bg-base-100 shadow-xl mb-6">
@@ -36,7 +49,12 @@ export default function ProfileView ({ user: propUser }) {
         <h3 className="card-title text-xl font-semibold">{title}</h3>
         {value ? (
           isLink ? (
-            <a href={value} target="_blank" rel="noreferrer" className="text-indigo-400 hover:underline" >
+            <a
+              href={value}
+              target="_blank"
+              rel="noreferrer"
+              className="text-indigo-400 hover:underline"
+            >
               {value}
             </a>
           ) : (
@@ -47,7 +65,7 @@ export default function ProfileView ({ user: propUser }) {
         )}
       </div>
     </div>
-  )
+  );
 
   return (
     <div className="min-h-screen bg-base-300 text-white py-10 px-6">
@@ -57,6 +75,14 @@ export default function ProfileView ({ user: propUser }) {
             <h2 className="card-title text-3xl font-bold justify-center">
               {profile.full_name}
             </h2>
+
+            {/* 🆕 Start-Chat button */}
+            <button
+              onClick={handleStartChat}
+              className="btn btn-outline btn-sm border-indigo-400 text-white hover:bg-indigo-600 hover:border-indigo-600 gap-2 mt-4"
+            >
+              <i className="fa-solid fa-comments"></i> Start Chat
+            </button>
           </div>
         </div>
 
@@ -86,5 +112,5 @@ export default function ProfileView ({ user: propUser }) {
         </div>
       </div>
     </div>
-  )
+  );
 }

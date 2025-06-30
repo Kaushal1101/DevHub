@@ -20,7 +20,8 @@ import GithubRegister from './pages/GithubRegister'
 import GithubSuccess from './pages/GithubSuccess'
 import GithubError from './pages/GitHubError'
 import FeaturePage from './pages/FeaturePage'
-
+import ChatSpace from './pages/ChatSpace'
+import ChatRoom from './pages/ChatRoom'
 
 
 const App = () => {
@@ -44,6 +45,10 @@ const App = () => {
           <Route path="/github-success" element={<GithubSuccess />} />
           <Route path="/github-error" element={<GithubError />} />
           <Route path="/features/:id" element={<FeaturePage />} />
+          <Route path="/chats" element={<ChatSpace />} />
+          <Route path="/chats/:chatId" element={<ChatRoom />} />
+          
+          {/* Catch-all route for 404 */}
         </Routes>
       </main>
 
