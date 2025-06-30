@@ -29,7 +29,7 @@ export default function GithubRegister() {
       }
 
       // Add userid to url, it will get passed through callback to us
-      window.location.href = `http://localhost:5001/auth/github?userId=${userId}`
+      window.location.href = `http://localhost:5001/auth/github?userId=${userId}&scope=repo,user:email`
 
     } catch (err) {
       console.error('Failed to decode token:', err)

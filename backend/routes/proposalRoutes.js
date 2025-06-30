@@ -9,6 +9,9 @@ router.get('/user', protect, getUserProposals);
 // GET /api/proposals/:id
 router.get('/:id', getProposalById);
 
+// POST /api/proposals
+router.post('/', protect, createProposal);
+
 // DELETE /api/proposals/:id
 router.delete('/:id', protect, deleteProposal);
 

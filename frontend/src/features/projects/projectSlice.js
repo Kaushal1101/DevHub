@@ -19,7 +19,7 @@ export const createProject = createAsyncThunk('projects/create',
             return await projectService.createProject(projectData)
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-            return thunkAPI.rejectWithValue(message)
+            return thunkAPI.rejectWithValue(message);
         }
     }
 )
@@ -29,10 +29,10 @@ export const getAllProjects = createAsyncThunk('projects/getAll',
     async (_, thunkAPI) => {
         try {       
             // No token passed as anyone should be able to access (even without login)
-            return await projectService.getAllProjects()
+            return await projectService.getAllProjects();
         } catch (error) {
             const message = (error.response && error.response.data && error.response.data.message) || error.message || error.toString()
-            return thunkAPI.rejectWithValue(message)
+            return thunkAPI.rejectWithValue(message);
         }
     }
 )
@@ -246,4 +246,4 @@ export const projectSlice = createSlice({
 })
 
 export const {reset, resetSelectedProject} = projectSlice.actions
-export default projectSlice.reducer
+export default projectSlice.reducer;

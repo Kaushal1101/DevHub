@@ -109,7 +109,11 @@ const createProject = asyncHandler( async (req, res) => {
         tech_stack, 
         tags, 
         creator: req.user._id, 
-        github_repo,
+        github_repo: {
+            ...github_repo,
+            // Add branch to project repo info
+            branch: github_repo.branch || 'main'
+        },
         fileTree: buildFileTree(fileTree)
     });
 

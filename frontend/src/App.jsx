@@ -22,6 +22,8 @@ import GithubError from './pages/GitHubError'
 import FeaturePage from './pages/FeaturePage'
 import ChatSpace from './pages/ChatSpace'
 import ChatRoom from './pages/ChatRoom'
+import ProposalPage from './pages/ProposalPage'
+
 
 
 const App = () => {
@@ -49,6 +51,7 @@ const App = () => {
           <Route path="/chats/:chatId" element={<ChatRoom />} />
           
           {/* Catch-all route for 404 */}
+          <Route path="/proposals/:id" element={<ProposalPage />} />
         </Routes>
       </main>
 

@@ -7,13 +7,23 @@ const Feature = require('../models/featureModel');
 // Routes tied to features to indicate each proposal is under a single feature
 
 // @route   GET /api/features/:featureId/proposals
-// @desc    Get proposals
+// @desc    Get all proposals for a specific feature
 // @access  Public
-const getAllProposals = asyncHandler( async (req, res) => {
-  const proposals = await Proposal.find().populate('proposer', 'username full_name role')
+const getProposalsByFeature = asyncHandler(async (req, res) => {
+  try {
+    const proposals = await Proposal.find({
+      feature: req.params.featureId
+    }).populate('proposer', 'username full_name role');
 
-  res.status(200).json({ proposals });
+    //console.log("THE PROPOSALS BLUD:", proposals);
+
+    res.status(200).json({ proposals });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
 });
+
 
 // @route   GET /api/proposals/:id
 // @desc    Get proposals by id
@@ -29,6 +39,7 @@ const getProposalById = asyncHandler( async (req, res) => {
   res.status(200).json(proposal)
 })
 
+
 // @route   GET /api/proposals/user
 // @desc    Get user proposals
 // @access  Public
@@ -37,6 +48,7 @@ const getUserProposals = asyncHandler( async (req, res) => {
 
   res.status(200).json(userProposals)
 })
+
 
 // Builds tree using flat raw tree structure
 const buildFileTree = (flatTree) => {
@@ -78,12 +90,12 @@ const buildFileTree = (flatTree) => {
   return root;
 };
 
+
 // @route   POST /api/features/:featureId/proposals
 // @desc    Create proposals
 // @access  Private
 const createProposal = asyncHandler( async (req, res) => {
-    const { title, desc, notes, attachmentUrl } = req.body;
-    const feature = req.params.featureId;
+    const { title, desc, notes, attachmentUrl, githubUrl, feature, branchName } = req.body;
     let status = req.body.status || "Pending";
 
     // console.log("BLUD", req.user);
@@ -102,6 +114,8 @@ const createProposal = asyncHandler( async (req, res) => {
        desc, 
        notes, 
        attachmentUrl, 
+       githubUrl,
+       branchName: branchName || 'main',
        status
     });
 
@@ -117,11 +131,12 @@ const createProposal = asyncHandler( async (req, res) => {
     res.status(201).json(proposal);
 });
 
+
 // @route   DELETE /api/proposals/:id
 // @desc    Delete proposals
 // @access  Private
 const deleteProposal = asyncHandler(async (req, res) => {
-    const proposal = await Proposal.findById(req.params.id).populate('proposer', 'username full_name role')
+    const proposal = await Proposal.findById(req.params.id).populate('proposer', 'username full_name role');
 
     if (!proposal) {
       res.status(400);
@@ -133,17 +148,17 @@ const deleteProposal = asyncHandler(async (req, res) => {
       return res.status(401).json({ message: 'Not authorized' });
     };
 
+    // Remove the proposal from the associated feature
+    await Feature.findByIdAndUpdate(
+      proposal.feature,
+      { $pull: { proposals: proposal._id } },
+      { new: true }
+    );
+
     await proposal.deleteOne();
 
-    // Proposal deleted from feature object
-    const featureBody = await Feature.findById(proposal.feature);
-    if (featureBody) {
-      featureBody.proposals = featureBody.proposals.filter(propId => propId.toString() !== proposal._id.toString());
-      await featureBody.save();
-    }
-
-    res.status(200).json({ message: `Proposal with id ${req.params.id} deleted`})
-})
+    res.status(200).json({ message: `Proposal with id ${req.params.id} deleted` });
+});
 
 
 /* 
@@ -174,10 +189,10 @@ const updateProposals = asyncHandler(async (req, res) => {
 */
 
 module.exports = {
-  getAllProposals,
   createProposal,
   deleteProposal,
   //updateProposals,
   getProposalById, 
   getUserProposals,
+  getProposalsByFeature
 };

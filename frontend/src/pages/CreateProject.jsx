@@ -45,7 +45,7 @@ function CreateProject() {
     tech_stack: [],
     tags: [],
     features: [{ title: '', desc: '' }],
-    github_repo: { url: '' },
+    github_repo: { url: '', branch: '' },
     fileTree: []
   });
 
@@ -118,6 +118,7 @@ function CreateProject() {
       toast.error('Invalid GitHub URL. Expected format: github.com/owner/repo');
       return;
     }
+    parsedRepo.branch = formData.github_repo.branch || 'main';
 
     if (!user || !user._id) {
       toast.error('User not authenticated.');
@@ -235,6 +236,18 @@ function CreateProject() {
             setFormData({
               ...formData,
               github_repo: { ...formData.github_repo, url: e.target.value }
+            })
+          }
+          className="input input-bordered w-full"
+        />
+        <input
+          type="text"
+          value={formData.github_repo.branch}
+          placeholder="Branch Name (default: main)"
+          onChange={(e) =>
+            setFormData({
+              ...formData,
+              github_repo: { ...formData.github_repo, branch: e.target.value }
             })
           }
           className="input input-bordered w-full"

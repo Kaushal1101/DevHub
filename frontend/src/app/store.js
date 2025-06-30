@@ -9,12 +9,15 @@ import authReducer from '../features/auth/authSlice';
 
 import featureReducer from '../features/featuresLogic/featureSlice';
 
+import proposalReducer from '../features/proposals/proposalSlice';
+
 // Redux initialization to maintain state in the app using reducers
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     projects: projectReducer,
-    features: featureReducer
+    features: featureReducer,
+    proposals: proposalReducer
   },
 });
 

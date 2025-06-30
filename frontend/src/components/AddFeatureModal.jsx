@@ -15,7 +15,9 @@ function AddFeatureModal({ projectId }) {
     dispatch(createFeature({ title, desc, project: projectId }));
     setTitle('');
     setDesc('');
+    // Closes popup and goes back to page
     document.getElementById('add_feature_modal').close();
+    window.refresh();
   };
 
   return (

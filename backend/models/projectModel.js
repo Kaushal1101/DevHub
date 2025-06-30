@@ -50,7 +50,13 @@ const projectSchema = mongoose.Schema({
             type: String,
             required: true,
             match: /^https:\/\/github\.com\/[\w.-]+\/[\w.-]+\/?$/
-        }
+        },
+        branch: {
+            type: String,
+            required: true,
+            default: 'main',
+            match: /^[\w.-]+$/, // Valid branch names
+        },
     },
     // Added file tree to store tree + hashmap data structure of repository
     fileTree: {
