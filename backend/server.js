@@ -71,6 +71,10 @@ app.use('/api/features', require('./routes/featureRoutes'));
 
 app.use('/api/github', require('./routes/githubAuth'));
 
+app.use('/api/comps', require('./routes/compRoutes'));
+
+app.use('/api/comp-entries', require('./routes/compEntryRoutes'));
+
 app.use(errorHandler);
 
 app.listen(port, () => console.log(`server started on port ${port}`));
