@@ -64,8 +64,7 @@ const ProposalPage = () => {
       proposal.content ||
       btoa(`# ${proposal.title}\n Merged via DevHub proposal ${proposal._id}`);
     
-    const proposalId = proposal._id;
-    Ex
+    const proposalId = proposal._id; 
     const commitData = {
       proposalId,
       proposalOwner,
