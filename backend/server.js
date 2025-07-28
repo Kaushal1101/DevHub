@@ -5,7 +5,7 @@ const cors = require('cors')
 const cookieParser = require('cookie-parser');
 
 // Import error handler if server doesn't start properly
-const {errorHandler} = require("./middleware/errorMiddleWare");
+const {errorHandler} = require("./middleware/errorMiddleware");
 
 const { connectDB } = require('./config/db');
 
